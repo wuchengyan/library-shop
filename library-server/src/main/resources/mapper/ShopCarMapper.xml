@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.library.dao.ShopCarMapper">
+    <resultMap id="BaseResultMap" type="com.example.library.domain.ShopCar">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="account" jdbcType="VARCHAR" property="account"/>
+        <result column="bookname" jdbcType="VARCHAR" property="bookname"/>
+        <result column="bookpic" jdbcType="VARCHAR" property="bookpic"/>
+        <result column="bookcount" jdbcType="INTEGER" property="bookcount"/>
+        <result column="bookprice" jdbcType="VARCHAR" property="bookprice"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,account,bookname,bookpic,bookcount,bookprice
+    </sql>
+
+    <insert id="insert" parameterType="com.example.library.domain.ShopCar">
+        insert into shopcar
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="account != null">account,</if>
+            <if test="bookname != null">bookname,</if>
+            <if test="bookpic != null">bookpic,</if>
+            <if test="bookcount != null">bookcount,</if>
+            <if test="bookprice != null">bookprice,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="account != null">#{account},</if>
+            <if test="bookname != null">#{bookname},</if>
+            <if test="bookpic != null">#{bookpic},</if>
+            <if test="bookcount != null">#{bookcount},</if>
+            <if test="bookprice != null">#{bookprice},</if>
+        </trim>
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE from shopcar
+        WHERE id = #{id}
+    </delete>
+
+    <delete id="deletebyaccount" parameterType="java.lang.String">
+        DELETE from shopcar
+        WHERE account = #{account}
+    </delete>
+
+    <update id="update" parameterType="com.example.library.domain.ShopCar">
+        update shopcar
+        <set>
+            <if test="account != null">account = #{account},</if>
+            <if test="bookname != null">bookname = #{bookname},</if>
+            <if test="bookpic != null">bookpic = #{bookpic},</if>
+            <if test="bookcount != null">bookcount = #{bookcount},</if>
+            <if test="bookprice != null">bookprice = #{bookprice},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findbyaccount" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from shopcar
+        WHERE account = #{account}
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.library.dao.BookMapper">
+    <resultMap id="BaseResultMap" type="com.example.library.domain.Book">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="bookname" jdbcType="VARCHAR" property="bookname"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="des" jdbcType="VARCHAR" property="des"/>
+        <result column="price" jdbcType="VARCHAR" property="price"/>
+        <result column="sort" jdbcType="VARCHAR" property="sort"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <result column="stock" jdbcType="INTEGER" property="stock"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,bookname,author,des,price,sort,createtime,stock,pic
+    </sql>
+
+    <insert id="insert" parameterType="com.example.library.domain.Book">
+        insert into book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="bookname != null">bookname,</if>
+            <if test="author != null">author,</if>
+            <if test="des != null">des,</if>
+            <if test="price != null">price,</if>
+            <if test="sort != null">sort,</if>
+            <if test="createtime != null">createtime,</if>
+            <if test="stock != null">stock,</if>
+            <if test="pic != null">pic,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="bookname != null">#{bookname},</if>
+            <if test="author != null">#{author},</if>
+            <if test="des != null">#{des},</if>
+            <if test="price != null">#{price},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="createtime != null">#{createtime},</if>
+            <if test="stock != null">#{stock},</if>
+            <if test="pic != null">#{pic},</if>
+        </trim>
+    </insert>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE from book
+        WHERE id = #{id}
+    </delete>
+
+    <update id="update" parameterType="com.example.library.domain.Book">
+        update book
+        <set>
+            <if test="bookname != null">bookname = #{bookname},</if>
+            <if test="author != null">author = #{author},</if>
+            <if test="des != null">des = #{des},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="createtime != null">createtime = #{createtime},</if>
+            <if test="stock != null">stock = #{stock},</if>
+            <if test="pic != null">pic = #{pic},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateStock" parameterType="com.example.library.domain.Book">
+        update book
+        <set>
+            <if test="stock != null">stock = #{stock},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <select id="findall" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from book
+    </select>
+
+    <select id="findbyid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from book
+        WHERE id = #{id}
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
