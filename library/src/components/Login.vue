@@ -35,7 +35,7 @@
 
 
 <script>
-import {getLoginStatus} from "../api/index"
+import {getLoginStatus,getUserMsg} from "../api/index"
 import {mixin} from "../mixins"
 export default {
   name: 'Login',
@@ -85,6 +85,7 @@ export default {
           if(res.code == 1){
             //存入本地缓存，方便主页取
             localStorage.setItem('account',this.ruleForm.account);
+            localStorage.setItem('type',this.ruleForm.type);
             //提示登录成功
             this.notify("登录成功","success");
             //跳转

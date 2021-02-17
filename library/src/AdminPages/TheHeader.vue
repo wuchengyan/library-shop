@@ -83,6 +83,7 @@ export default {
     handleCommand(command){
       if(command == "logout"){
         localStorage.removeItem('account')
+        localStorage.removeItem('type')
         this.$router.push("/")
       }
       if(command == "gotoIndex"){

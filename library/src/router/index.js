@@ -14,7 +14,7 @@ import UserMsg from '@/AdminPages/UserMsg'
 import Index from '@/UserPages/Index'
 import Main from '@/UserPages/Main'
 import ShopCart from '@/UserPages/ShopCart'
-import UserOrder from '@/UserPages/UserOrder'
+// import UserOrder from '@/UserPages/UserOrder'
 import User from '@/UserPages/User'
 import BasicMsg from '@/UserPages/BasicMsg'
 import MyOrders from '@/UserPages/MyOrders'
@@ -177,11 +177,11 @@ router.beforeEach((to,from,next) => {
   console.log("从"+ from.name + "来");
   console.log("到" + to.name + "去");
   if(to.name == "Admin" || to.name == "Home" || to.name == "Book" || to.name == "Order" || to.name == "UserMsg"){
-    if(localStorage.getItem("account")){
+    if(localStorage.getItem("account")&&(localStorage.getItem("type") === 0)){
       next();
     }
     else{
-      alert('未拥有管理员权限！！！');
+      alert('没有管理员权限');
     }
   }else{
     next();
