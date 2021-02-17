@@ -173,16 +173,19 @@ const router = new Router({
 
 
 // //设置不允许通过url直接访问后台
-// router.beforeEach((to,from,next) => {
-//   console.log(to);
-//   //如果用户直接URL输入Admin且不是管理员身份时,重定向到登录页
-//   if(localStorage.getItem("account") != "WCY" || localStorage.getItem("account") == ""){
-//     next({
-//       path: '/Login'
-//     })
-//   }else{
-//     next();
-//   }
-// });
+router.beforeEach((to,from,next) => {
+  console.log("从"+ from.name + "来");
+  console.log("到" + to.name + "去");
+  if(to.name == "Admin" || to.name == "Home" || to.name == "Book" || to.name == "Order" || to.name == "UserMsg"){
+    if(localStorage.getItem("account")){
+      next();
+    }
+    else{
+      alert('未拥有管理员权限！！！');
+    }
+  }else{
+    next();
+  }
+});
 
 export default router;

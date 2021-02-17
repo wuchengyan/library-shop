@@ -17,6 +17,7 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item  command="logout">退出登录</el-dropdown-item>
+          <el-dropdown-item  command="gotoIndex">去首页</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -83,6 +84,9 @@ export default {
       if(command == "logout"){
         localStorage.removeItem('account')
         this.$router.push("/")
+      }
+      if(command == "gotoIndex"){
+        this.$router.push("/index");
       }
     }
   }

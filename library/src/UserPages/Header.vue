@@ -18,11 +18,12 @@
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item  command="logout">退出登录</el-dropdown-item>
+                <el-dropdown-item v-if="isAdmin === 0"  command="gotoAdmin">去管理员页</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div> 
           <div v-else>
-            <span style="color:red"><a @click="toLogin">未登录</a></span>
+            <span style="color:red"><a @click="toLogin">点我去登录</a></span>
           </div>
         </el-menu-item>
       </el-menu>
@@ -32,14 +33,15 @@
 
 <script>
 import {mixin} from '../mixins'
-import {getUserPic} from '../api/index'
+import {getUserPic,getUserMsg} from '../api/index'
 export default {
   name: 'Header',
   mixins:[mixin],
   data(){
     return {
       title: 'BookShop!',
-      pic: ''
+      pic: '',
+      isAdmin: ''
     }
   },
   computed:{
@@ -52,6 +54,7 @@ export default {
   },
   created(){
     this.getPic();
+    this.getAdmin();
   },
   methods:{
     getPic(){
@@ -63,10 +66,22 @@ export default {
         console.log(err);
       })
     },
+    getAdmin(){
+      getUserMsg(this.account)
+      .then(res => {
+        this.isAdmin = res.type;
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    },
     handleCommand(command){
       if(command == "logout"){
         localStorage.removeItem('account');
         this.$router.push("/");
+      }
+      if(command == "gotoAdmin"){
+        this.$router.push("/Admin");
       }
     },
     toLogin(){
