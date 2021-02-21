@@ -84,9 +84,9 @@
      <!--修改用户-->
     <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="400px" center>
       <el-form :model="editForm" status-icon :rules="rules" ref="editForm" label-width="80px">
-        <el-form-item prop="account" label="账号" size="mini">
+        <!-- <el-form-item prop="account" label="账号" size="mini">
           <el-input v-model="editForm.account" placeholder="账号"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item prop="password" label="密码" size="mini">
           <el-input type="password" v-model="editForm.password" placeholder="密码"></el-input>
         </el-form-item>
@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import {getUserData,registerStatus,updateUser,deleteUser} from "../api/index"
+import {getUserData,registerStatus,updateUser,deleteUser,getUserMsg} from "../api/index"
 import {mixin} from '../mixins'
 export default {
   name: 'UserMsg',

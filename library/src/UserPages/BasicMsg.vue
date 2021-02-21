@@ -12,9 +12,9 @@
         </div>
         <div class="msgForm">
           <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="账号" prop="account">
+            <!-- <el-form-item label="账号" prop="account">
               <el-input  v-model="ruleForm.account" placeholder="请输入账号"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="密码" prop="password">
               <el-input type="password"  v-model="ruleForm.password" placeholder="请输入密码"></el-input>
             </el-form-item>
@@ -57,9 +57,10 @@ export default {
   data(){
     return {
       time: '',
+      hasAccount: true, //账号是否已存在
       ruleForm:{
         id: '',
-        account: '',
+        account: localStorage.getItem("account"),
         password: '',
         name: '',
         phone: '',
@@ -143,37 +144,53 @@ export default {
       },
       //提交表单数据
       btn_submit(){
-        //选择的地址
-        let edit_address = this.province+this.city+this.area;
-        
-        let params = new URLSearchParams();
-        params.append("id",this.ruleForm.id);
-        params.append("account",this.ruleForm.account);
-        params.append("password",this.ruleForm.password);
-        params.append("name",this.ruleForm.name);
-        params.append("phone",this.ruleForm.phone);
-        params.append("mail",this.ruleForm.mail);
-        params.append("address",edit_address);
-        params.append("type",1);
 
-        updateUser(params)
-        .then(res => {
-          if(res.code == 1){
-            this.$notify({
-              title:"修改成功",
-              type:"success"
-            });
-            this.getData();
-          }else{
-            this.$notify({
-              title:"修改失败",
-              type:"fail"
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        })
+        // getUserMsg(this.ruleForm.account)
+        // .then(res => {
+        //   if(res.account === this.ruleForm.account){
+        //     this.hasAccount = false;
+        //   }else{
+        //     this.hasAccount = true;
+        //   }
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        // })
+        // if(this.hasAccount){
+        //   this.notify("修改的账号已存在，请重新修改","error");
+        // }else{
+          //选择的地址
+          let edit_address = this.province+this.city+this.area;
+          
+          let params = new URLSearchParams();
+          params.append("id",this.ruleForm.id);
+          params.append("account",this.ruleForm.account);
+          params.append("password",this.ruleForm.password);
+          params.append("name",this.ruleForm.name);
+          params.append("phone",this.ruleForm.phone);
+          params.append("mail",this.ruleForm.mail);
+          params.append("address",edit_address);
+          params.append("type",1);
+
+          updateUser(params)
+          .then(res => {
+            if(res.code == 1){
+              this.$notify({
+                title:"修改成功",
+                type:"success"
+              });
+              this.getData();
+            }else{
+              this.$notify({
+                title:"修改失败",
+                type:"fail"
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
+        
       },
       //获得数据
       getData(){

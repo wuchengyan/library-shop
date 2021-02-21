@@ -177,7 +177,7 @@ router.beforeEach((to,from,next) => {
   console.log("从"+ from.name + "来");
   console.log("到" + to.name + "去");
   if(to.name == "Admin" || to.name == "Home" || to.name == "Book" || to.name == "Order" || to.name == "UserMsg"){
-    if(localStorage.getItem("account")&&(localStorage.getItem("type") === 0)){
+    if(localStorage.getItem("account")&&(localStorage.getItem("type") == 0)){
       next();
     }
     else{

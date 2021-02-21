@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import {registerStatus} from "../api/index"
+import {registerStatus,getUserMsg} from "../api/index"
 import {mixin} from "../mixins"
 export default {
   name: 'Login',
@@ -122,14 +122,29 @@ export default {
       province: '', //省
       city: '',   //市
       area: '', //区域
-      detailaddress: ''//具体选择的地址
+      detailaddress: '',//具体选择的地址
+      hasAccount: true //账号是否已注册
     }
   },
   methods:{
     btn_submit(){
+      getUserMsg(this.ruleForm.account)
+      .then(res => {
+        if(res.account === this.ruleForm.account){
+          console.log('已经注册');
+          this.hasAccount = false;
+        }else{
+          console.log('可以注册');
+          this.hasAccount = true;
+        }
+      })
+
       if(this.value == 0){
         this.notify("不允许注册管理员","error");
-      }else{
+      }else if(this.hasAccount){
+        this.notify("该账号已注册，请换一个","error");
+      }
+      else{
         //获取具体地址
         this.detailaddress = this.province + this.city + this.area;
         this.ruleForm.address = this.detailaddress;
